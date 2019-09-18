@@ -177,23 +177,23 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    // let moves = history.map((step, move) => {
-    //   const desc = move ?
-    //     'Go to move #' + move + ' (' + step.location.x + ',' + step.location.y + ')' :
-    //     'Go to game start';
-    //   return (this.state.stepNumber === move) ? (
-    //     <li key={move}>
-    //       <button className="btn-bold" onClick={() => this.jumpTo(move)}>{desc}</button>
-    //     </li>
-    //   ) : (
-    //     <li key={move}>
-    //     <button onClick={() => this.jumpTo(move)}>{desc}</button>
-    //   </li>
-    //   );
-    // });
-    // if (!this.state.isDescending) {
-    //   moves = moves.reverse();
-    // }
+    let moves = history.map((step, move) => {
+      const desc = move ?
+        'Go to move #' + move + ' (' + step.location.x + ',' + step.location.y + ')' :
+        'Go to game start';
+      return (this.state.stepNumber === move) ? (
+        <li key={move}>
+          <button className="btn-bold" onClick={() => this.jumpTo(move)}>{desc}</button>
+        </li>
+      ) : (
+        <li key={move}>
+        <button onClick={() => this.jumpTo(move)}>{desc}</button>
+      </li>
+      );
+    });
+    if (!this.state.isDescending) {
+      moves = moves.reverse();
+    }
 
     let status;
     if (winner) {
@@ -208,6 +208,7 @@ class Game extends React.Component {
         <div className="game-info">
         <h1>Game caro Việt Nam</h1>
             <div style={{fontSize:20,marginTop:20}}>{status}</div>
+            <ol>{moves}</ol>
           </div>
           <div className="game-board">
             <Board

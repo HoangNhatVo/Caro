@@ -177,23 +177,23 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    let moves = history.map((step, move) => {
-      const desc = move ?
-        'Go to move #' + move + ' (' + step.location.x + ',' + step.location.y + ')' :
-        'Go to game start';
-      return (this.state.stepNumber === move) ? (
-        <li key={move}>
-          <button className="btn-bold" onClick={() => this.jumpTo(move)}>{desc}</button>
-        </li>
-      ) : (
-        <li key={move}>
-        <button onClick={() => this.jumpTo(move)}>{desc}</button>
-      </li>
-      );
-    });
-    if (!this.state.isDescending) {
-      moves = moves.reverse();
-    }
+    // let moves = history.map((step, move) => {
+    //   const desc = move ?
+    //     'Go to move #' + move + ' (' + step.location.x + ',' + step.location.y + ')' :
+    //     'Go to game start';
+    //   return (this.state.stepNumber === move) ? (
+    //     <li key={move}>
+    //       <button className="btn-bold" onClick={() => this.jumpTo(move)}>{desc}</button>
+    //     </li>
+    //   ) : (
+    //     <li key={move}>
+    //     <button onClick={() => this.jumpTo(move)}>{desc}</button>
+    //   </li>
+    //   );
+    // });
+    // if (!this.state.isDescending) {
+    //   moves = moves.reverse();
+    // }
 
     let status;
     if (winner) {
@@ -202,23 +202,19 @@ class Game extends React.Component {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
 
-    let arrow = this.state.isDescending ? '↓' : '↑'
     return (
       <div className="content">
         <div className="game">
+        <div className="game-info">
+        <h1>Game caro Việt Nam</h1>
+            <div style={{fontSize:20,marginTop:20}}>{status}</div>
+          </div>
           <div className="game-board">
             <Board
               squares={current.squares}
               onClick={(i, j) => this.handleClick(i, j)}
               winner={winner}
             />
-          </div>
-          <div className="game-info">
-            <div>
-              <button onClick={this.sort}>Thứ tự bước {arrow}</button>
-            </div>
-            <div>{status}</div>
-            <ol>{moves}</ol>
           </div>
         </div>
       </div>

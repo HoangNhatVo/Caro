@@ -42,9 +42,18 @@ ol, ul {
 
 .game {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
+  justify-content: space-around
 }
 
 .game-info {
   margin-left: 20px;
+}
+.square-highlight {
+  color: red;
+  background-color: yellow;
+  font-weight: bold;
+}
+.content{
+  text-align: center;
 }

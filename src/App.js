@@ -1,84 +1,9 @@
 import React from 'react';
 import './App.css';
-
+import Board from './Board';
 const minSize = 5;
 const maxSize = 25;
 const nSquareToWin = 5;
-
-function Square(props) {
-  return (props.win) ? (
-    <button className="square square-highlight" onClick={props.onClick}>
-      {props.value}
-    </button>
-  ) : (
-    <button className="square" onClick={props.onClick}>
-      {props.value}
-    </button>  
-  )  ;
-}
-
-class SquareRow extends React.Component {
-  render() {
-    let squareRow = this.props.row.map((square, idx) => {
-      let k = "s" + idx;
-      let win = false;
-      let winner = this.props.winner;
-      let rowIdx = this.props.rowIdx;
-      if (winner) {
-        if (winner.direction === "ToRight" &&
-          idx >= winner.x && idx <= winner.x + nSquareToWin - 1 && rowIdx === winner.y) {
-            win = true;
-        }
-        if (winner.direction === "ToDown" &&
-            rowIdx >= winner.y && rowIdx <= winner.y + nSquareToWin - 1 && idx === winner.x) {
-            win = true;
-        }
-        if (winner.direction === "ToRightDown" &&
-          idx >= winner.x && idx <= winner.x + nSquareToWin - 1 && idx - winner.x === rowIdx - winner.y) {
-            win = true;
-        }
-        if (winner.direction === "ToLeftDown" &&
-          idx <= winner.x && idx >= winner.x - nSquareToWin + 1 && winner.x - idx === rowIdx - winner.y) {
-            console.log(winner.x+' '+winner.y+' '+idx+' '+rowIdx+' '+nSquareToWin);
-            win = true;
-        }
-      }
-      return (
-        <Square win={win} value={square} onClick={() => this.props.onClick(this.props.rowIdx, idx)} key={k} />
-      )
-    })
-    return (
-      <div className="board-row">
-        {squareRow}
-      </div>
-    )
-  }
-}
-
-class Board extends React.Component {
-  renderSquare(i) {
-    return (
-      <Square
-        value={this.props.squares[i]} 
-        onClick={() => this.props.onClick(i)}
-      />
-    );
-  }
-  render() {
-    let board;
-    board = this.props.squares.map((row, idx) => {
-      let k = "r" + idx;
-      return (
-        <SquareRow winner={this.props.winner} rowIdx={idx} row={row} onClick={this.props.onClick} key={k}/>
-      )
-    })
-    return (
-      <div>
-        {board}
-      </div>
-    );
-  }
-}
 
 class Game extends React.Component {
   constructor(props) {

@@ -1,9 +1,8 @@
 import React from 'react';
 import './App.css';
-import Board from './Board';
+import { connect } from 'react-redux';
+import Board from './components/Board';
 
-const minSize = 5;
-const maxSize = 25;
 const nSquareToWin = 5;
 function calculateWinner(squares) {
   let win;
@@ -67,109 +66,28 @@ class Game extends React.Component {
       tmpArr[i] = Array(20).fill(null);
     }
     this.state = {
-      // inputWidth: 20,
-      // inputHeight: 20,
-      width: 20,
-      height: 20,
-      history: [
-        {
-          squares: tmpArr,
-          location: null
-        }
-      ],
-      stepNumber: 0,
-      xIsNext: true,
       isDescending: true
     };
-    this.handleChangeHeight = this.handleChangeHeight.bind(this);
-    this.handleChangeWidth = this.handleChangeWidth.bind(this);
     this.sort = this.sort.bind(this);
   }
 
-  jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      xIsNext: step % 2 === 0
-    });
-  }
-
-  handleClick(i, j) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[this.state.stepNumber];
-    const squares = current.squares.slice();
-    current.squares.map((row, idx) => {
-      squares[idx] = current.squares[idx].slice();
-      return true;
-    });
-    if (calculateWinner(squares) || squares[i][j]) {
-      return;
-    }
-    squares[i][j] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
-      history: history.concat([
-        {
-          squares,
-          location: { x: i, y: j }
-        }
-      ]),
-      stepNumber: history.length,
-      xIsNext: !this.state.xIsNext
-    });
-  }
+  // jumpTo(step) {
+  //   this.setState({
+  //     stepNumber: step,
+  //     xIsNext: step % 2 === 0
+  //   });
+  // }
 
   sort() {
     this.setState({ isDescending: !this.state.isDescending });
   }
 
-  handleChangeWidth(e) {
-    const val = Number(e.target.value);
-    // this.setState({ inputWidth: val });
-    if (val >= minSize && val <= maxSize) {
-      const tmpArr = Array(this.state.height);
-      for (let i = 0; i < this.state.height; i += 1) {
-        tmpArr[i] = Array(val).fill(null);
-      }
-      this.setState({
-        width: val,
-        history: [
-          {
-            squares: tmpArr,
-            location: null
-          }
-        ],
-        stepNumber: 0,
-        xIsNext: true
-      });
-    }
-  }
-
-  handleChangeHeight(e) {
-    const val = Number(e.target.value);
-    // this.setState({ inputHeight: val });
-    if (val >= minSize && val <= maxSize) {
-      const tmpArr = Array(val);
-      for (let i = 0; i < val; i += 1) {
-        tmpArr[i] = Array(this.state.width).fill(null);
-      }
-      this.setState({
-        height: Number(val),
-        history: [
-          {
-            squares: tmpArr,
-            location: null
-          }
-        ],
-        stepNumber: 0,
-        xIsNext: true
-      });
-    }
-  }
-
   render() {
-    const current = this.state.history[this.state.stepNumber];
+    console.log(this.props);
+    const current = this.props.square.history[this.props.square.stepNumber];
     const winner = calculateWinner(current.squares);
 
-    let moves = this.state.history.map((step, move) => {
+    let moves = this.props.square.history.map((step, move) => {
       const desc = move
         ? `Go to move #${move} (${step.location.x},${step.location.y})`
         : 'Go to game start';
@@ -201,7 +119,6 @@ class Game extends React.Component {
     } else {
       status = `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
     }
-
     return (
       <div className="content">
         <div className="game">
@@ -211,17 +128,17 @@ class Game extends React.Component {
             <ol>{moves}</ol>
           </div>
           <div className="game-board">
-            <Board
-              squares={current.squares}
-              onClick={(i, j) => this.handleClick(i, j)}
-              winner={winner}
-            />
+            <Board winner={winner} />
           </div>
         </div>
       </div>
     );
   }
 }
-
-export default Game;
-// ========================================
+const mapStatetoProps = state => {
+  return state;
+};
+export default connect(
+  mapStatetoProps,
+  null
+)(Game);

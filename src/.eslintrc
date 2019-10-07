@@ -6,6 +6,9 @@
         "no-continue": "off",
         "no-param-reassign":"off",
         "no-use-before-define": "off",
+        "consistent-return":"off",
+        "import/imports-first":"off",
+        "import/prefer-default-export":"off",
         "react/prefer-stateless-function": "off",
         "react/destructuring-assignment": ["warn", "never"],
         "react/no-access-state-in-setstate": 0,
@@ -18,7 +21,6 @@
       ],
       "react/prop-types": 0,
       "no-underscore-dangle": 0,
-      "import/imports-first": ["error", "absolute-first"],
       "import/newline-after-import": "error"
     },
     "globals": {

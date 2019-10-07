@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Square from './Square';
+import * as action from '../actions/index';
 
 const nSquareToWin = 5;
 class SquareRow extends React.Component {
@@ -48,7 +50,7 @@ class SquareRow extends React.Component {
         <Square
           win={win}
           value={square}
-          onClick={() => this.props.onClick(this.props.rowIdx, idx)}
+          onClick={() => this.props.onMark(this.props.rowIdx, idx)}
           key={k}
         />
       );
@@ -56,4 +58,19 @@ class SquareRow extends React.Component {
     return <div className="board-row">{squareRow}</div>;
   }
 }
-export default SquareRow;
+const mapStatetoProps = state => {
+  return state;
+};
+
+const mapDispatchtoProps = dispatch => {
+  return {
+    onMark: (i, j) => {
+      dispatch(action.makeChess(i, j));
+    }
+  };
+};
+
+export default connect(
+  mapStatetoProps,
+  mapDispatchtoProps
+)(SquareRow);

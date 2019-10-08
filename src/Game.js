@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import Board from './components/Board';
+import * as action from './actions/index';
 
 const nSquareToWin = 5;
 function calculateWinner(squares) {
@@ -61,29 +62,25 @@ function calculateWinner(squares) {
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    const tmpArr = Array(20);
-    for (let i = 0; i < 20; i += 1) {
-      tmpArr[i] = Array(20).fill(null);
-    }
     this.state = {
-      isDescending: true
+      isDescending: true,
+      load: true
     };
     this.sort = this.sort.bind(this);
   }
 
-  // jumpTo(step) {
-  //   this.setState({
-  //     stepNumber: step,
-  //     xIsNext: step % 2 === 0
-  //   });
-  // }
+  jumpTo(step) {
+    this.setState({
+      load: !this.state.load
+    });
+    this.props.onJump(step);
+  }
 
   sort() {
     this.setState({ isDescending: !this.state.isDescending });
   }
 
   render() {
-    console.log(this.props);
     const current = this.props.square.history[this.props.square.stepNumber];
     const winner = calculateWinner(current.squares);
 
@@ -128,7 +125,7 @@ class Game extends React.Component {
             <ol>{moves}</ol>
           </div>
           <div className="game-board">
-            <Board winner={winner} />
+            <Board winner={winner} squaresRow={current} />
           </div>
         </div>
       </div>
@@ -138,7 +135,14 @@ class Game extends React.Component {
 const mapStatetoProps = state => {
   return state;
 };
+const mapDispatchtoProps = dispatch => {
+  return {
+    onJump: step => {
+      dispatch(action.onJump(step));
+    }
+  };
+};
 export default connect(
   mapStatetoProps,
-  null
+  mapDispatchtoProps
 )(Game);

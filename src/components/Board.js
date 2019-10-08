@@ -4,7 +4,7 @@ import SquareRow from './SquareRow';
 
 class Board extends React.Component {
   render() {
-    const current = this.props.square.history[this.props.square.stepNumber];
+    const current = this.props.squaresRow;
     const board = current.squares.map((row, idx) => {
       const k = `r${idx}`;
       return (

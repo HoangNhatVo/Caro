@@ -7,3 +7,10 @@ export const makeChess = (i, j) => {
     j
   };
 };
+
+export const onJump = step => {
+  return {
+    type: type.JUMP,
+    step
+  };
+};

@@ -75,7 +75,7 @@ const myReducer = (state = initalState, action) => {
       return true;
     });
     if (calculateWinner(squares) || squares[action.i][action.j]) {
-      return;
+      return state;
     }
     squares[action.i][action.j] = state.xIsNext ? 'X' : 'O';
 
@@ -89,6 +89,10 @@ const myReducer = (state = initalState, action) => {
       stepNumber: history.length,
       xIsNext: !state.xIsNext
     };
+  } if (action.type === type.JUMP) {
+    state.stepNumber = action.step;
+    state.xIsNext = action.step % 2 === 0;
+    return state;
   }
 
   return state;

@@ -1,15 +1,15 @@
 body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+  font: 14px 'Century Gothic', Futura, sans-serif;
 }
 
-ol, ul {
+ol,
+ul {
   padding-left: 30px;
 }
 
 .board-row:after {
   clear: both;
-  content: "";
+  content: '';
   display: table;
 }
 
@@ -43,7 +43,7 @@ ol, ul {
 .game {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: space-around
+  justify-content: space-around;
 }
 
 .game-info {
@@ -54,6 +54,7 @@ ol, ul {
   background-color: yellow;
   font-weight: bold;
 }
-.content{
+.content {
+  padding: 15px;
   text-align: center;
 }

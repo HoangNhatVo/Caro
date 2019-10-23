@@ -18,7 +18,7 @@ class NormalLoginForm extends React.Component {
       if (!err) {
         axios({
           method: 'post',
-          url: 'http://localhost:8080/user/login',
+          url: 'https://expresapi.herokuapp.com/user/login',
           data: {
             username: values.username,
             password: values.password
@@ -43,6 +43,7 @@ class NormalLoginForm extends React.Component {
                 islogin: true
               });
               console.log(this.state.islogin);
+              message.success('Đăng nhập thành công');
             } else {
               message.error('Tài khoản hoặc mật khẩu không chính xác');
             }

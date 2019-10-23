@@ -1,10 +1,10 @@
 import React from 'react';
-import { Layout, Menu, Dropdown, Icon, Button } from 'antd';
+import { Layout, Menu, Dropdown, Icon } from 'antd';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import Game from '../../Game';
 import './style.css';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 class Homepage extends React.Component {
   logout = () => {
     localStorage.removeItem('user');
@@ -31,31 +31,15 @@ class Homepage extends React.Component {
 
     const token = JSON.parse(localStorage.getItem('token'));
     console.log(token);
-
-    if (token) {
-      const config = {
-        headers: { Authorization: `bearer ${token.token}` }
-      };
-      const bodyParameters = {
-        key: 'value'
-      };
-      axios
-        .get('http://localhost:8080/me', bodyParameters, config)
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-
+    const username = JSON.parse(localStorage.getItem('user'));
+    console.log(username);
     return (
       <Layout className="layout">
         <Header>
           <div className="logo" />
           <div id="components-dropdown-demo-dropdown-button">
             <Dropdown.Button overlay={menu} icon={<Icon type="user" />}>
-              Username
+              {username.username}
             </Dropdown.Button>
           </div>
         </Header>
@@ -68,31 +52,24 @@ class Homepage extends React.Component {
             position: 'relative'
           }}
         >
-          <Button
-            type="primary"
-            icon="play-circle"
-            style={{
-              fontSize: 20,
-              position: 'absolute',
-              top: '50%',
-              left: 0,
-              right: 0,
-              margin: 'auto'
-            }}
-          >
-            Play game
+          <Game />
+          {/* <Link to='/game'>
+            <Button
+              type="primary"
+              icon="play-circle"
+              style={{
+                fontSize: 20,
+                position: 'absolute',
+                top: '50%',
+                left: 0,
+                right: 0,
+                margin: 'auto'
+              }}
+            >
+              Play game
           </Button>
+          </Link> */}
         </Content>
-        <Footer
-          style={{
-            textAlign: 'center',
-            position: 'absolute',
-            bottom: 0,
-            width: '100%'
-          }}
-        >
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
       </Layout>
     );
   }

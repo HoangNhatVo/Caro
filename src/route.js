@@ -2,6 +2,7 @@ import React from 'react';
 import Login from './pages/login/index';
 import Register from './pages/register/index';
 import HomePage from './pages/home/index';
+import Game from './Game';
 
 const route = [
   {
@@ -18,6 +19,11 @@ const route = [
     path: '/home',
     exact: true,
     main: () => <HomePage />
+  },
+  {
+    path: '/game',
+    exact: true,
+    main: () => <Game />
   }
 ];
 

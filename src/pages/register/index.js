@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.css';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -18,7 +18,7 @@ class RegistrationForm extends React.Component {
       if (!err) {
         axios({
           method: 'post',
-          url: 'http://localhost:8080/user/register',
+          url: 'https://expresapi.herokuapp.com/user/register',
           data: {
             username: values.username,
             password: values.password
@@ -26,11 +26,13 @@ class RegistrationForm extends React.Component {
         })
           .then(res => {
             if (res.data) {
-              console.log('dang ki tai khoan thanh cong');
+              message.success('Đăng kí thành công');
+
               console.log(res);
             } else {
-              console.log('dang ki that bai');
+              message.error('Đăng kí thất bại');
             }
+            this.props.form.resetFields();
           })
           .catch(error => {
             console.log(error);
@@ -44,8 +46,8 @@ class RegistrationForm extends React.Component {
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   };
 
-  compareToFirstPassword = (rule, value, callback, props) => {
-    const { form } = props;
+  compareToFirstPassword = (rule, value, callback) => {
+    const { form } = this.props;
     if (value && value !== form.getFieldValue('password')) {
       callback('Two passwords that you enter is inconsistent!');
     } else {
@@ -53,8 +55,8 @@ class RegistrationForm extends React.Component {
     }
   };
 
-  validateToNextPassword = (rule, value, callback, props) => {
-    const { form } = props;
+  validateToNextPassword = (rule, value, callback) => {
+    const { form } = this.props;
     if (value && this.state.confirmDirty) {
       form.validateFields(['confirm'], { force: true });
     }
@@ -97,10 +99,6 @@ class RegistrationForm extends React.Component {
         <Form.Item label="Username">
           {getFieldDecorator('username', {
             rules: [
-              {
-                type: 'email',
-                message: 'The input is not valid E-mail!'
-              },
               {
                 required: true,
                 message: 'Please input your E-mail!'

@@ -44,7 +44,7 @@ class NormalLoginForm extends React.Component {
               });
               console.log(this.state.islogin);
             } else {
-              message.error('Tài khoản hoặc mật khẩu sai');
+              message.error('Tài khoản hoặc mật khẩu không chính xác');
             }
           })
           .catch(error => {

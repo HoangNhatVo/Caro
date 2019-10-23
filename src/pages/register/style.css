@@ -1,0 +1,13 @@
+.regis-form {
+  max-width: 600px;
+  margin: auto;
+  position: absolute;
+  top: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+.regis-form h2 {
+  text-align: center;
+}

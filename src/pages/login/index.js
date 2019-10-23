@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './style.css';
@@ -26,7 +26,6 @@ class NormalLoginForm extends React.Component {
         })
           .then(res => {
             if (res.data) {
-              console.log(res.data);
               localStorage.setItem(
                 'user',
                 JSON.stringify({
@@ -45,7 +44,7 @@ class NormalLoginForm extends React.Component {
               });
               console.log(this.state.islogin);
             } else {
-              console.log('mat khau sai');
+              message.error('Tài khoản hoặc mật khẩu sai');
             }
           })
           .catch(error => {

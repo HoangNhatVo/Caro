@@ -1,16 +1,11 @@
-.register {
-  position: relative;
-  height: 100%;
-  background-image: linear-gradient(#7117ea, #ea6060);
-}
-.regis-form {
-  width: 600px;
+.info-form {
+  max-width: 400px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 200px;
+  top: 50px;
 }
-.regis-form h2 {
+.info-form h2 {
   text-align: center;
   font-weight: 700;
   font-size: 30px;

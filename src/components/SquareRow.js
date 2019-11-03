@@ -6,6 +6,7 @@ import * as action from '../actions/index';
 const nSquareToWin = 5;
 class SquareRow extends React.Component {
   render() {
+    // console.log(this.props)
     const squareRow = this.props.row.map((square, idx) => {
       const k = `s${idx}`;
       let win = false;
@@ -50,7 +51,14 @@ class SquareRow extends React.Component {
         <Square
           win={win}
           value={square}
-          onClick={() => this.props.onMark(this.props.rowIdx, idx)}
+          onClick={() => {
+            if (this.props.square.xIsNext) {
+              this.props.onMark(this.props.rowIdx, idx);
+              setTimeout(async () => {
+                await this.props.onRandom();
+              }, 2000);
+            }
+          }}
           key={k}
         />
       );
@@ -66,6 +74,9 @@ const mapDispatchtoProps = dispatch => {
   return {
     onMark: (i, j) => {
       dispatch(action.makeChess(i, j));
+    },
+    onRandom: () => {
+      dispatch(action.randomCheck());
     }
   };
 };

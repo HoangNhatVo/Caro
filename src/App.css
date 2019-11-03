@@ -1,7 +1,12 @@
 body {
   font: 14px 'Century Gothic', Futura, sans-serif;
 }
-
+#root {
+  height: 100%;
+}
+.App {
+  height: 100%;
+}
 ol,
 ul {
   padding-left: 30px;

@@ -114,7 +114,7 @@ class Game extends React.Component {
     if (winner) {
       status = `Winner: ${winner.val}`;
     } else {
-      status = `Next player: ${this.state.xIsNext ? 'X' : 'O'}`;
+      status = `Đến lượt: ${this.props.square.xIsNext ? 'bạn X' : 'máy O'}`;
     }
     return (
       <div className="content">
@@ -132,8 +132,8 @@ class Game extends React.Component {
     );
   }
 }
-const mapStatetoProps = state => {
-  return state;
+const mapStatetoProps = states => {
+  return states;
 };
 const mapDispatchtoProps = dispatch => {
   return {

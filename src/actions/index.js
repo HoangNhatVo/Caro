@@ -8,6 +8,11 @@ export const makeChess = (i, j) => {
   };
 };
 
+export const randomCheck = () => {
+  return {
+    type: type.RANDOM_CHESS
+  };
+};
 export const onJump = step => {
   return {
     type: type.JUMP,

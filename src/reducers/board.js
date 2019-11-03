@@ -74,11 +74,11 @@ const myReducer = (state = initalState, action) => {
       squares[idx] = current.squares[idx].slice();
       return true;
     });
+
     if (calculateWinner(squares) || squares[action.i][action.j]) {
       return state;
     }
     squares[action.i][action.j] = state.xIsNext ? 'X' : 'O';
-
     return {
       history: history.concat([
         {
@@ -89,9 +89,69 @@ const myReducer = (state = initalState, action) => {
       stepNumber: history.length,
       xIsNext: !state.xIsNext
     };
-  } if (action.type === type.JUMP) {
+  }
+  if (action.type === type.RANDOM_CHESS) {
+    let ranI = Math.floor(Math.random() * 20);
+    let ranJ = Math.floor(Math.random() * 20);
+    const history = state.history.slice(0, state.stepNumber + 1);
+    const current = history[state.stepNumber];
+    const squares = current.squares.slice();
+    current.squares.map((row, idx) => {
+      squares[idx] = current.squares[idx].slice();
+      return true;
+    });
+    if (calculateWinner(squares)) {
+      return state;
+    }
+    while (squares[ranI][ranJ]) {
+      ranI = Math.floor(Math.random() * 20);
+      ranJ = Math.floor(Math.random() * 20);
+    }
+    squares[ranI][ranJ] = state.xIsNext ? 'X' : 'O';
+    return {
+      history: history.concat([
+        {
+          squares,
+          location: { x: ranI, y: ranJ }
+        }
+      ]),
+      stepNumber: history.length,
+      xIsNext: !state.xIsNext
+    };
+  }
+  if (action.type === type.JUMP) {
     state.stepNumber = action.step;
     state.xIsNext = action.step % 2 === 0;
+    if (!state.xIsNext) {
+      let ranI = Math.floor(Math.random() * 20);
+      let ranJ = Math.floor(Math.random() * 20);
+      const history = state.history.slice(0, state.stepNumber + 1);
+      const current = history[state.stepNumber];
+      const squares = current.squares.slice();
+      current.squares.map((row, idx) => {
+        squares[idx] = current.squares[idx].slice();
+        return true;
+      });
+      if (calculateWinner(squares)) {
+        return state;
+      }
+      while (squares[ranI][ranJ]) {
+        ranI = Math.floor(Math.random() * 20);
+        ranJ = Math.floor(Math.random() * 20);
+      }
+      console.log(ranI, ranJ);
+      squares[ranI][ranJ] = state.xIsNext ? 'X' : 'O';
+      return {
+        history: history.concat([
+          {
+            squares,
+            location: { x: ranI, y: ranJ }
+          }
+        ]),
+        stepNumber: history.length,
+        xIsNext: !state.xIsNext
+      };
+    }
     return state;
   }
 

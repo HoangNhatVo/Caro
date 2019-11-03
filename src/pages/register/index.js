@@ -49,7 +49,7 @@ class RegistrationForm extends React.Component {
   compareToFirstPassword = (rule, value, callback) => {
     const { form } = this.props;
     if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback('Mật khẩu chưa trùng khớp');
     } else {
       callback();
     }
@@ -90,57 +90,63 @@ class RegistrationForm extends React.Component {
     };
 
     return (
-      <Form
-        {...formItemLayout}
-        onSubmit={this.handleSubmit}
-        className="regis-form"
-      >
-        <h2>Register</h2>
-        <Form.Item label="Username">
-          {getFieldDecorator('username', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your E-mail!'
-              }
-            ]
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item label="Password" hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your password!'
-              },
-              {
-                validator: this.validateToNextPassword
-              }
-            ]
-          })(<Input.Password />)}
-        </Form.Item>
-        <Form.Item label="Confirm Password" hasFeedback>
-          {getFieldDecorator('confirm', {
-            rules: [
-              {
-                required: true,
-                message: 'Please confirm your password!'
-              },
-              {
-                validator: this.compareToFirstPassword
-              }
-            ]
-          })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-        </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit" style={{ marginRight: 15 }}>
-            Register
-          </Button>
-          <Button type="ghost" htmlType="button">
-            <Link to="/">Login </Link>
-          </Button>
-        </Form.Item>
-      </Form>
+      <div className="register">
+        <Form
+          {...formItemLayout}
+          onSubmit={this.handleSubmit}
+          className="regis-form"
+        >
+          <h2>Register</h2>
+          <Form.Item label="Username">
+            {getFieldDecorator('username', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your username!'
+                }
+              ]
+            })(<Input />)}
+          </Form.Item>
+          <Form.Item label="Password" hasFeedback>
+            {getFieldDecorator('password', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input your password!'
+                },
+                {
+                  validator: this.validateToNextPassword
+                }
+              ]
+            })(<Input.Password />)}
+          </Form.Item>
+          <Form.Item label="Confirm Password" hasFeedback>
+            {getFieldDecorator('confirm', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please confirm your password!'
+                },
+                {
+                  validator: this.compareToFirstPassword
+                }
+              ]
+            })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+          </Form.Item>
+          <Form.Item {...tailFormItemLayout}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ marginRight: 15 }}
+            >
+              Register
+            </Button>
+            <Button type="ghost" htmlType="button">
+              <Link to="/">Login </Link>
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     );
   }
 }

@@ -2,6 +2,9 @@
     "extends": ["airbnb", "prettier", "prettier/react"],
     "plugins": ["prettier"],
     "rules": {
+        "react/sort-comp":"off",
+        "react/no-deprecated":"off",
+        "react/destructuring-assignment":"off",
         "react/jsx-props-no-spreading":"off",
         "jsx-a11y/click-events-have-key-events":"off",
         "jsx-a11y/no-static-element-interactions":"off",
@@ -13,7 +16,6 @@
         "import/imports-first":"off",
         "import/prefer-default-export":"off",
         "react/prefer-stateless-function": "off",
-        "react/destructuring-assignment": ["warn", "never"],
         "react/no-access-state-in-setstate": 0,
         "react/no-array-index-key": 0,
       "react/jsx-filename-extension": [

@@ -182,6 +182,7 @@ class NormalLoginForm extends React.Component {
                 onSuccess={this.responseGoogle}
                 onFailure={this.responseGoogle}
                 cookiePolicy="single_host_origin"
+                className="my-google-button-class"
               />
               <FacebookLogin
                 appId="551627075614550"

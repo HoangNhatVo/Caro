@@ -48,17 +48,19 @@ a {
   margin-left: 7px;
 }
 .my-facebook-button-class {
-  font-family: Helvetica, sans-serif;
-  font-weight: 700;
+  font-family: Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #fff;
   cursor: pointer;
   display: inline-block;
-  font-size: calc(0.27548vw + 9px);
+  font-size: calc(0.27548vw + 11px);
   text-decoration: none;
-  text-transform: uppercase;
   transition: background-color 0.3s, border-color 0.3s;
   background-color: #4c69ba;
   border: calc(0.06887vw + 0.67769px) solid #4c69ba;
-  padding: calc(0.34435vw + 5px) calc(0.34435vw + 18.38843px);
+  padding: calc(0.34435vw + 2px) calc(0.34435vw + 18.38843px);
+}
+.my-google-button-class div,
+.my-google-button-class span {
+  padding: 7px !important;
 }

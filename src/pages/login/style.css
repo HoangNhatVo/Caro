@@ -64,3 +64,6 @@ a {
 .my-google-button-class span {
   padding: 7px !important;
 }
+.my-google-button-class div{
+  margin-right: 0 !important
+}

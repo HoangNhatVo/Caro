@@ -4,6 +4,8 @@ import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './style.css';
 import queryString from 'query-string';
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 
 class NormalLoginForm extends React.Component {
   constructor(props) {
@@ -25,6 +27,56 @@ class NormalLoginForm extends React.Component {
       this.props.history.push('/home');
     }
   }
+
+  responseGoogle = response => {
+    if (response.accessToken) {
+      window.localStorage.setItem(
+        'token',
+        JSON.stringify({
+          token: response.accessToken
+        })
+      );
+      window.localStorage.setItem(
+        'user',
+        JSON.stringify({
+          username: response.profileObj.name,
+          img: response.profileObj.imageUrl
+        })
+      );
+      window.localStorage.setItem(
+        'isggfb',
+        JSON.stringify({
+          isggfb: true
+        })
+      );
+      this.props.history.push('/home');
+    }
+  };
+
+  responseFacebook = response => {
+    if (response.accessToken) {
+      window.localStorage.setItem(
+        'token',
+        JSON.stringify({
+          token: response.accessToken
+        })
+      );
+      window.localStorage.setItem(
+        'user',
+        JSON.stringify({
+          username: response.name,
+          img: response.picture.data.url
+        })
+      );
+      window.localStorage.setItem(
+        'isggfb',
+        JSON.stringify({
+          isggfb: true
+        })
+      );
+      this.props.history.push('/home');
+    }
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -125,18 +177,20 @@ class NormalLoginForm extends React.Component {
               Log in
             </Button>
             <div style={{ textAlign: 'center', marginTop: 10 }}>
-              <a
-                href="https://expresapi.herokuapp.com/user/google"
-                className="button-google"
-              >
-                <Icon type="google" />
-              </a>
-              <a
-                href="https://expresapi.herokuapp.com/user/google"
-                className="button-facebook"
-              >
-                <Icon type="facebook" />
-              </a>
+              <GoogleLogin
+                clientId="583261927649-cpve4s5ltblhp7dgkaqppos5jf5jrf8u.apps.googleusercontent.com"
+                onSuccess={this.responseGoogle}
+                onFailure={this.responseGoogle}
+                cookiePolicy="single_host_origin"
+              />
+              <FacebookLogin
+                appId="551627075614550"
+                autoLoad
+                cssClass="my-facebook-button-class"
+                fields="name,email,picture"
+                callback={this.responseFacebook}
+              />
+              ,
             </div>
             <p style={{ textAlign: 'center', fontSize: 18, marginTop: 10 }}>
               Or

@@ -24,22 +24,33 @@ class Information extends React.Component {
 
   componentWillMount() {
     const token = JSON.parse(localStorage.getItem('token'));
-    axios
-      .get('https://expresapi.herokuapp.com/me', {
-        headers: { Authorization: `Bearer ${token.token}` }
-      })
-      .then(res => {
-        console.log(res);
-        this.setState({
-          username: res.data.username,
-          password: res.data.password,
-          _id: res.data._id,
-          preview: res.data.avatar
-        });
-      })
-      .catch(err => {
-        console.log(err);
+    const isggfb = JSON.parse(localStorage.getItem('isggfb'));
+    console.log(isggfb);
+    if (isggfb) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      console.log(user);
+      this.setState({
+        username: user.username,
+        preview: user.img
       });
+    } else {
+      axios
+        .get('https://expresapi.herokuapp.com/me', {
+          headers: { Authorization: `Bearer ${token.token}` }
+        })
+        .then(res => {
+          console.log(res);
+          this.setState({
+            username: res.data.username,
+            password: res.data.password,
+            _id: res.data._id,
+            preview: res.data.avatar
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 
   onClose = () => {
@@ -76,7 +87,7 @@ class Information extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    console.log(this.state.preview);
+    const isggfb = JSON.parse(localStorage.getItem('isggfb'));
     return (
       <Layout className="layout">
         <Header />
@@ -126,15 +137,27 @@ class Information extends React.Component {
                 ]
               })(<Input.Password />)}
             </Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-              onClick={this.handleSubmit}
-              style={{ width: '30%' }}
-            >
-              Lưu
-            </Button>
+            {isggfb ? (
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+                style={{ width: '30%' }}
+                disabled
+              >
+                Lưu
+              </Button>
+            ) : (
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+                onClick={this.handleSubmit}
+                style={{ width: '30%' }}
+              >
+                Lưu
+              </Button>
+            )}
           </Form>
         </Content>
       </Layout>

@@ -16,23 +16,38 @@ class HeaderGame extends React.Component {
   logout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    const isggfb = JSON.parse(localStorage.getItem('isggfb'));
+    if (isggfb) {
+      localStorage.removeItem('isggfb');
+    }
   };
 
   componentWillMount() {
     const token = JSON.parse(localStorage.getItem('token'));
-    axios
-      .get('https://expresapi.herokuapp.com/me', {
-        headers: { Authorization: `Bearer ${token.token}` }
-      })
-      .then(res => {
-        this.setState({
-          username: res.data.username,
-          preview: res.data.avatar
-        });
-      })
-      .catch(err => {
-        console.log(err);
+    const isggfb = JSON.parse(localStorage.getItem('isggfb'));
+    console.log(isggfb);
+    if (isggfb) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      console.log(user);
+      this.setState({
+        username: user.username,
+        preview: user.img
       });
+    } else {
+      axios
+        .get('https://expresapi.herokuapp.com/me', {
+          headers: { Authorization: `Bearer ${token.token}` }
+        })
+        .then(res => {
+          this.setState({
+            username: res.data.username,
+            preview: res.data.avatar
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 
   render() {

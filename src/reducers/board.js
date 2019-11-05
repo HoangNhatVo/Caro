@@ -151,8 +151,9 @@ const myReducer = (state = initalState, action) => {
         stepNumber: history.length,
         xIsNext: !state.xIsNext
       };
-    }
-    return state;
+    } 
+      return state;
+    
   }
 
   return state;
